@@ -2,15 +2,15 @@ const http = require('http');
 const url = require('url');
 const query = require('querystring');
 const htmlHandler = require('./htmlResponses.js');
-const jsonHandler = require('./responses.js');
+const apiHandler = require('./apiResponses.js');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
 const urlStruct = {
-  '/random-joke': jsonHandler.getRandomJokeResponse,
-  '/random-jokes': jsonHandler.getRandomJokesResponse,
+  '/': htmlHandler.getIndexResponse,
+  '/good-action': apiHandler.getSingleRandomGoodActionResponse,
+  '/good-actions': apiHandler.getMultipleRandomGoodActionsResponse,
   '/default-styles.css': htmlHandler.getDefaultStylesResponse,
-  '/joke-client.html': htmlHandler.getJokeClient,
   notFound: htmlHandler.get404Response,
 };
 
