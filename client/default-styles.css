@@ -1,3 +1,36 @@
 * {
   font-family: sans-serif;
 }
+
+/* Grid Styles */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  column-gap: 25px;
+  row-gap: 25px;
+}
+
+/* GoodAction card styles */
+.ga-card {
+  border: 2px solid black;
+  text-align: center;
+  padding: 10px;
+}
+
+.ga-card-title {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.ga-card-tags {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.ga-card-tag {
+  background-color: lightgrey;
+  padding: 5px 10px 5px 10px;
+  border-radius: 10px;
+  margin: 3px;
+}

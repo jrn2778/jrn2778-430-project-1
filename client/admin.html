@@ -4,19 +4,22 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Better World</title>
-    <link rel="stylesheet" href="default-styles.css">
-    <script src="src/index.js" type="module"></script>
+    <title>Better World: Admin</title>
+    <link rel="stylesheet" href="default-styles.css" />
+    <script src="src/admin.js" type="module"></script>
   </head>
 
   <body>
     <nav>
       <a href="/">Home</a>&nbsp;&bull;&nbsp;
-      <a href="/app">App</a>&nbsp;&bull;&nbsp; 
+      <a href="/app">App</a>&nbsp;&bull;&nbsp;
       <a href="/suggest">Suggest</a>&nbsp;&bull;&nbsp;
       <a href="/admin">Admin</a>
     </nav>
-      <h1>Better World</h1>
-      <p id="goodAction">YOU can make the world a better place.</p>
+    <h1>Admin</h1>
+    <h2>Unapproved</h2>
+    <div id="unapproved" class="grid"></div>
+    <h2>All</h2>
+    <div id="approved" class="grid"></div>
   </body>
 </html>

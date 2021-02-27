@@ -6,10 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Better World: Make a Suggestion</title>
     <link rel="stylesheet" href="default-styles.css">
-    <script src="index.js"></script>
+    <script src="src/suggest.js" type="module"></script>
   </head>
 
   <body>
+    <nav>
+      <a href="/">Home</a>&nbsp;&bull;&nbsp;
+      <a href="/app">App</a>&nbsp;&bull;&nbsp; 
+      <a href="/suggest">Suggest</a>&nbsp;&bull;&nbsp;
+      <a href="/admin">Admin</a>
+    </nav>
     <h1>Suggestion</h1>
     <form action="/add" method="post" id="suggestionForm">
         <label for="goodAction">Good Action:</label>

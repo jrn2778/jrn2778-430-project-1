@@ -1,3 +1,4 @@
+const { v4: uuidv4 } = require('uuid');
 const data = require('./data.js');
 
 // Returns the binary size of a string
@@ -60,28 +61,35 @@ const getSingleRandomGoodAction = (isXML = false, tags = []) => {
 // Gets one or more goodActions
 const getMultipleRandomGoodActions = (
   isXML = false,
-  enteredLimit = data.goodActions.length,
+  enteredLimit = null,
   tags = [],
 ) => {
   // Only use goodActions that have the given tags
   const applicableData = getDataSetWithTags(tags);
-
-  // Make sure limit is within bounds (1 - goodActions length)
-  let limit = Math.floor(Number(enteredLimit));
-  limit = !limit ? 1 : limit;
-  limit = limit < 1 ? 1 : limit;
-  limit = limit > applicableData.length ? applicableData.length : limit;
-
-  // Gets random goodActions of amount 'limit'
-  // Source: https://stackoverflow.com/a/19270021
   const chosenGoodActions = [];
-  const taken = [];
-  let len = applicableData.length;
-  let n = limit;
-  while (n--) {
-    const x = Math.floor(Math.random() * len);
-    chosenGoodActions[n] = applicableData[x in taken ? taken[x] : x];
-    taken[x] = --len in taken ? taken[len] : len;
+
+  // Don't shuffle if not limit was entered
+  if (enteredLimit != null) {
+    // Make sure limit is within bounds (1 - goodActions length)
+    let limit = Math.floor(Number(enteredLimit));
+    limit = !limit ? 1 : limit;
+    limit = limit < 1 ? 1 : limit;
+    limit = limit > applicableData.length ? applicableData.length : limit;
+
+    // Gets random goodActions of amount 'limit'
+    // Source: https://stackoverflow.com/a/19270021
+    const taken = [];
+    let len = applicableData.length;
+    let n = limit;
+    while (n--) {
+      const x = Math.floor(Math.random() * len);
+      chosenGoodActions[n] = applicableData[x in taken ? taken[x] : x];
+      taken[x] = --len in taken ? taken[len] : len;
+    }
+  } else {
+    data.goodActions.forEach((goodAction) => {
+      chosenGoodActions.push(goodAction);
+    });
   }
 
   // Check for XML or JSON
@@ -146,27 +154,44 @@ const getMultipleRandomGoodActionsResponse = (
 
 // Adds a suggested response to the data
 const addSuggestionResponse = (request, response, params) => {
+  let status = 400;
   const responseJSON = {
     message: "A 'Good Action' is required",
   };
 
   if (params.goodAction != null) {
-    let newData = {
+    const newData = {
+      id: uuidv4(),
       action: params.goodAction,
-      tags: ['Unapproved'],
+      tags: ['unapproved'],
     };
     data.goodActions.push(newData);
 
+    status = 201;
     responseJSON.message = 'Successfully added!';
   }
 
-  response.writeHead(201, { 'Content-Type': 'application/json' });
+  response.writeHead(status, { 'Content-Type': 'application/json' });
   response.write(JSON.stringify(responseJSON));
+  response.end();
+};
+
+// Removes the goodAction with the given id
+const deleteGoodActionResponse = (request, response, params) => {
+  for (let i = 0; i < data.goodActions.length; i++) {
+    if (data.goodActions[i].id === params.id) {
+      data.goodActions.splice(i, 1);
+      break;
+    }
+  }
+
+  response.writeHead(204, {});
   response.end();
 };
 
 module.exports = {
   getSingleRandomGoodActionResponse,
   getMultipleRandomGoodActionsResponse,
-  addSuggestionResponse
+  addSuggestionResponse,
+  deleteGoodActionResponse,
 };

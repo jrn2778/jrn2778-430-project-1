@@ -7,13 +7,22 @@ const apiHandler = require('./apiResponses.js');
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
 const urlStruct = {
+  // Pages
   '/': htmlHandler.getIndexResponse,
   '/suggest': htmlHandler.getSuggestResponse,
-  '/index.js': htmlHandler.getIndexJSReponse,
+  '/admin': htmlHandler.getAdminResponse,
+  // CSS
   '/default-styles.css': htmlHandler.getDefaultStylesResponse,
+  // JS
+  '/src/index.js': htmlHandler.getIndexJSReponse,
+  '/src/suggest.js': htmlHandler.getSuggestJSReponse,
+  '/src/admin.js': htmlHandler.getAdminJSReponse,
+  '/src/util.js': htmlHandler.getUtilJSReponse,
+  // API Endpoints
   '/good-action': apiHandler.getSingleRandomGoodActionResponse,
   '/good-actions': apiHandler.getMultipleRandomGoodActionsResponse,
   '/add': apiHandler.addSuggestionResponse,
+  '/delete': apiHandler.deleteGoodActionResponse,
   notFound: htmlHandler.get404Response,
 };
 
@@ -22,8 +31,7 @@ const handlePOST = (request, response, pathname) => {
   const body = [];
 
   // https://nodejs.org/api/http.html
-  request.on('error', (err) => {
-    console.dir(err);
+  request.on('error', () => {
     response.statusCode = 400;
     response.end();
   });
