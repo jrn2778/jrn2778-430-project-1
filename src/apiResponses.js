@@ -5,14 +5,21 @@ const data = require('./data.js');
 // Source: https://stackoverflow.com/a/27377098
 const getBinarySize = (string) => Buffer.byteLength(string, 'utf8');
 
+// Get tags back as an array
+const convertTagsToArr = (tags) => {
+  if (tags == null) return [];
+
+  let tagsArr = Array.isArray(tags) ? tags : [tags];
+  return tagsArr.map((t) => t.toLowerCase());
+};
+
 // Returns the goodActions containing the given tags
 const getDataSetWithTags = (tags) => {
   // Full data set if not tags are provided
   if (tags.length <= 0) return data.goodActions;
 
   // Make sure tags is an array and all lower case
-  let tagsArr = Array.isArray(tags) ? tags : [tags];
-  tagsArr = tagsArr.map((t) => t.toLowerCase());
+  let tagsArr = convertTagsToArr(tags);
 
   const newData = [];
 
@@ -52,7 +59,7 @@ const getSingleRandomGoodAction = (isXML = false, tags = []) => {
   // Check for XML or JSON version
   if (isXML) {
     return `<?xml version="1.0"?>\n${goodActionAsXML(
-      applicableData[randIndex],
+      applicableData[randIndex]
     )}`;
   }
   return JSON.stringify(applicableData[randIndex]);
@@ -62,13 +69,13 @@ const getSingleRandomGoodAction = (isXML = false, tags = []) => {
 const getMultipleRandomGoodActions = (
   isXML = false,
   enteredLimit = null,
-  tags = [],
+  tags = []
 ) => {
   // Only use goodActions that have the given tags
   const applicableData = getDataSetWithTags(tags);
   const chosenGoodActions = [];
 
-  // Don't shuffle if not limit was entered
+  // Don't shuffle if no limit was entered
   if (enteredLimit != null) {
     // Make sure limit is within bounds (1 - goodActions length)
     let limit = Math.floor(Number(enteredLimit));
@@ -87,7 +94,7 @@ const getMultipleRandomGoodActions = (
       taken[x] = --len in taken ? taken[len] : len;
     }
   } else {
-    data.goodActions.forEach((goodAction) => {
+    applicableData.forEach((goodAction) => {
       chosenGoodActions.push(goodAction);
     });
   }
@@ -114,7 +121,7 @@ const getSingleRandomGoodActionResponse = (
   response,
   params,
   acceptedTypes,
-  httpMethod,
+  httpMethod
 ) => {
   const isXML = acceptedTypes.includes('text/xml');
   const contentType = isXML ? 'text/xml' : 'application/json';
@@ -134,14 +141,14 @@ const getMultipleRandomGoodActionsResponse = (
   response,
   params,
   acceptedTypes,
-  httpMethod,
+  httpMethod
 ) => {
   const isXML = acceptedTypes.includes('text/xml');
   const contentType = isXML ? 'text/xml' : 'application/json';
   const content = getMultipleRandomGoodActions(
     isXML,
     params.limit,
-    params.tags,
+    params.tags
   );
 
   const headers = { 'Content-Type': contentType };
@@ -163,7 +170,7 @@ const addSuggestionResponse = (request, response, params) => {
     const newData = {
       id: uuidv4(),
       action: params.goodAction,
-      tags: ['unapproved'],
+      tags: ['unapproved', ...convertTagsToArr(params.tags)],
     };
     data.goodActions.push(newData);
 

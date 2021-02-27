@@ -5,23 +5,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Better World: Make a Suggestion</title>
-    <link rel="stylesheet" href="default-styles.css">
+    <link rel="stylesheet" href="default-styles.css" />
     <script src="src/suggest.js" type="module"></script>
   </head>
 
   <body>
     <nav>
       <a href="/">Home</a>&nbsp;&bull;&nbsp;
-      <a href="/app">App</a>&nbsp;&bull;&nbsp; 
+      <a href="/app">App</a>&nbsp;&bull;&nbsp;
       <a href="/suggest">Suggest</a>&nbsp;&bull;&nbsp;
       <a href="/admin">Admin</a>
     </nav>
     <h1>Suggestion</h1>
     <form action="/add" method="post" id="suggestionForm">
-        <label for="goodAction">Good Action:</label>
-        <input type="text" name="goodAction" id="goodAction">
-        <br />
-        <button type="submit">Submit</button>
+      <h2>Action</h2>
+      <input type="text" name="goodAction" id="goodAction" />
+      <br />
+      <h2>Tags</h2>
+      <label for="individual">Individual</label>
+      <input type="checkbox" name="individual" id="individualCheck" /> |
+      <label for="environment">Environment</label>
+      <input type="checkbox" name="environment" id="environmentCheck" /> |
+      <label for="bring-friends">Bring Friends</label>
+      <input type="checkbox" name="bring-friends" id="bringFriendsCheck" /> |
+      <label for="people">People</label>
+      <input type="checkbox" name="people" id="peopleCheck" /> |
+      <label for="animals">Animals</label>
+      <input type="checkbox" name="animals" id="animalsCheck" />
+      <br />
+      <button type="submit">Submit</button>
     </form>
     <p id="status"></p>
   </body>

@@ -37,7 +37,11 @@ function sendSuggestionForm(e) {
 
   const goodActionField = form.querySelector('#goodAction');
 
-  const formData = `goodAction=${goodActionField.value}`;
+  let formData = `goodAction=${goodActionField.value}`;
+  let checked = form.querySelectorAll('input[type="checkbox"]:checked');
+  checked.forEach((c) => {
+    formData += `&tags=${c.name}`;
+  });
 
   const xhr = new XMLHttpRequest();
   xhr.open(formMethod, formAction);
