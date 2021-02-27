@@ -144,7 +144,29 @@ const getMultipleRandomGoodActionsResponse = (
   response.end();
 };
 
+// Adds a suggested response to the data
+const addSuggestionResponse = (request, response, params) => {
+  const responseJSON = {
+    message: "A 'Good Action' is required",
+  };
+
+  if (params.goodAction != null) {
+    let newData = {
+      action: params.goodAction,
+      tags: ['Unapproved'],
+    };
+    data.goodActions.push(newData);
+
+    responseJSON.message = 'Successfully added!';
+  }
+
+  response.writeHead(201, { 'Content-Type': 'application/json' });
+  response.write(JSON.stringify(responseJSON));
+  response.end();
+};
+
 module.exports = {
   getSingleRandomGoodActionResponse,
   getMultipleRandomGoodActionsResponse,
+  addSuggestionResponse
 };
