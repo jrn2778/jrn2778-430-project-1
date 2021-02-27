@@ -4,6 +4,29 @@ const data = require('./data.js');
 // Source: https://stackoverflow.com/a/27377098
 const getBinarySize = (string) => Buffer.byteLength(string, 'utf8');
 
+// Returns the goodActions containing the given tags
+const getDataSetWithTags = (tags) => {
+  // Full data set if not tags are provided
+  if (tags.length <= 0) return data.goodActions;
+
+  // Make sure tags is an array and all lower case
+  let tagsArr = Array.isArray(tags) ? tags : [tags];
+  tagsArr = tagsArr.map((t) => t.toLowerCase());
+
+  const newData = [];
+
+  if (tagsArr.length > 0) {
+    // Add goodAction to newData if it has one of the tags
+    data.goodActions.forEach((goodAction) => {
+      if (goodAction.tags.some((tag) => tagsArr.includes(tag.toLowerCase()))) {
+        newData.push(goodAction);
+      }
+    });
+  }
+
+  return newData;
+};
+
 // Converts a goodAction to XML
 const goodActionAsXML = (goodAction) => {
   let xml = '<good-action>';
@@ -19,35 +42,45 @@ const goodActionAsXML = (goodAction) => {
 };
 
 // Gets a single, random goodAction
-const getSingleRandomGoodAction = (isXML = false) => {
-  const randIndex = Math.floor(Math.random() * data.goodActions.length);
+const getSingleRandomGoodAction = (isXML = false, tags = []) => {
+  // Only use goodActions that have the given tags
+  const applicableData = getDataSetWithTags(tags);
+
+  const randIndex = Math.floor(Math.random() * applicableData.length);
 
   // Check for XML or JSON version
   if (isXML) {
     return `<?xml version="1.0"?>\n${goodActionAsXML(
-      data.goodActions[randIndex],
+      applicableData[randIndex],
     )}`;
   }
-  return JSON.stringify(data.goodActions[randIndex]);
+  return JSON.stringify(applicableData[randIndex]);
 };
 
 // Gets one or more goodActions
-const getMultipleRandomGoodActions = (enteredLimit = 1, isXML = false) => {
+const getMultipleRandomGoodActions = (
+  isXML = false,
+  enteredLimit = data.goodActions.length,
+  tags = [],
+) => {
+  // Only use goodActions that have the given tags
+  const applicableData = getDataSetWithTags(tags);
+
   // Make sure limit is within bounds (1 - goodActions length)
   let limit = Math.floor(Number(enteredLimit));
   limit = !limit ? 1 : limit;
   limit = limit < 1 ? 1 : limit;
-  limit = limit > data.goodActions.length ? data.goodActions.length : limit;
+  limit = limit > applicableData.length ? applicableData.length : limit;
 
   // Gets random goodActions of amount 'limit'
   // Source: https://stackoverflow.com/a/19270021
   const chosenGoodActions = [];
   const taken = [];
-  let len = data.goodActions.length;
+  let len = applicableData.length;
   let n = limit;
   while (n--) {
     const x = Math.floor(Math.random() * len);
-    chosenGoodActions[n] = data.goodActions[x in taken ? taken[x] : x];
+    chosenGoodActions[n] = applicableData[x in taken ? taken[x] : x];
     taken[x] = --len in taken ? taken[len] : len;
   }
 
@@ -77,7 +110,7 @@ const getSingleRandomGoodActionResponse = (
 ) => {
   const isXML = acceptedTypes.includes('text/xml');
   const contentType = isXML ? 'text/xml' : 'application/json';
-  const content = getSingleRandomGoodAction(isXML);
+  const content = getSingleRandomGoodAction(isXML, params.tags);
 
   const headers = { 'Content-Type': contentType };
   if (httpMethod === 'HEAD') headers['Content-Length'] = getBinarySize(content);
@@ -97,7 +130,11 @@ const getMultipleRandomGoodActionsResponse = (
 ) => {
   const isXML = acceptedTypes.includes('text/xml');
   const contentType = isXML ? 'text/xml' : 'application/json';
-  const content = getMultipleRandomGoodActions(params.limit, isXML);
+  const content = getMultipleRandomGoodActions(
+    isXML,
+    params.limit,
+    params.tags,
+  );
 
   const headers = { 'Content-Type': contentType };
   if (httpMethod === 'HEAD') headers['Content-Length'] = getBinarySize(content);

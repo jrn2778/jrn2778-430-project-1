@@ -8,9 +8,11 @@ const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
 const urlStruct = {
   '/': htmlHandler.getIndexResponse,
+  '/suggest': htmlHandler.getSuggestResponse,
+  '/index.js': htmlHandler.getIndexJSReponse,
+  '/default-styles.css': htmlHandler.getDefaultStylesResponse,
   '/good-action': apiHandler.getSingleRandomGoodActionResponse,
   '/good-actions': apiHandler.getMultipleRandomGoodActionsResponse,
-  '/default-styles.css': htmlHandler.getDefaultStylesResponse,
   notFound: htmlHandler.get404Response,
 };
 
