@@ -20,4 +20,14 @@ function deleteGoodAction(id, callback, htmlElement) {
   xhr.send();
 }
 
-export { getGoodAction, deleteGoodAction };
+// Updates a goodAction with the given formData
+// The goodAction to update is from formData.id
+// htmlElement is the goodAction HTML element that also needs to be updated (passed through to callback)
+function updateGoodAction(formData, callback, htmlElement) {
+  const xhr = new XMLHttpRequest();
+  xhr.open('PUT', '/update');
+  xhr.onload = (e) => callback(e, htmlElement);
+  xhr.send(formData);
+}
+
+export { getGoodAction, deleteGoodAction, updateGoodAction };

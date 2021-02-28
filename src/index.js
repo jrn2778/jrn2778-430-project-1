@@ -23,6 +23,7 @@ const urlStruct = {
   '/good-actions': apiHandler.getMultipleRandomGoodActionsResponse,
   '/add': apiHandler.addSuggestionResponse,
   '/delete': apiHandler.deleteGoodActionResponse,
+  '/update': apiHandler.updateGoodActionResponse,
   notFound: htmlHandler.get404Response,
 };
 
@@ -55,7 +56,7 @@ const onRequest = (request, response) => {
 
   const httpMethod = request.method;
 
-  if (request.method === 'POST') {
+  if (request.method === 'POST' || request.method === 'PUT') {
     handlePOST(request, response, pathname);
     return;
   }

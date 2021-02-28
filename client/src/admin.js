@@ -37,6 +37,21 @@ function handleDelete(e, htmlElement) {
   }
 }
 
+function handleUpdate(e, htmlElement) {
+  if (e.target.status == 204) {
+    alert('Updated!');
+    htmlElement.remove();
+
+    // Remove 'Approve' button and 'unapproved' tag
+    htmlElement.querySelector('button').remove();
+    htmlElement.querySelector('.ga-card-tag').remove();
+
+    // Add the element to the approved section
+    const approvedContainer = document.querySelector('#approved');
+    approvedContainer.appendChild(htmlElement);
+  }
+}
+
 function formatGoodAction(container, goodAction) {
   /* Format:
    * <div class="ga-card">
@@ -44,7 +59,7 @@ function formatGoodAction(container, goodAction) {
    *   <div class="ga-card-tags">
    *     <span class="ga-card-tag"></span>
    *   </div>
-   *   <button>Remove</button>
+   *   <button></button>
    * </div>
    */
 
@@ -65,14 +80,35 @@ function formatGoodAction(container, goodAction) {
   card.appendChild(tagsContainer);
 
   // Create individual tags
+  let unapproved = false;
   goodAction.tags.forEach((tag) => {
     const span = document.createElement('span');
     span.classList.add('ga-card-tag');
     span.textContent = tag;
     tagsContainer.appendChild(span);
+
+    if (tag == 'unapproved') unapproved = true;
   });
 
   // Create buttons
+  // Only add 'Approve' button if the goodAction has the unapproved tag
+  if (unapproved) {
+    const approveBtn = document.createElement('button');
+    approveBtn.textContent = 'Approve';
+    approveBtn.onclick = () => {
+      // Put all the goodAction's data into a string
+      let formData = `id=${goodAction.id}`;
+      formData += `&action=${goodAction.action}`;
+      goodAction.tags.forEach((t) => {
+        // Remove unapproved tag
+        if (t != 'unapproved') formData += `&tags=${t}`;
+      });
+
+      util.updateGoodAction(formData, handleUpdate, card);
+    }
+    card.appendChild(approveBtn);
+  }
+
   const removeBtn = document.createElement('button');
   removeBtn.textContent = 'Remove';
   removeBtn.onclick = () => util.deleteGoodAction(goodAction.id, handleDelete, card);

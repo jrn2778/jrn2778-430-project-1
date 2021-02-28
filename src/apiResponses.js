@@ -9,7 +9,7 @@ const getBinarySize = (string) => Buffer.byteLength(string, 'utf8');
 const convertTagsToArr = (tags) => {
   if (tags == null) return [];
 
-  let tagsArr = Array.isArray(tags) ? tags : [tags];
+  const tagsArr = Array.isArray(tags) ? tags : [tags];
   return tagsArr.map((t) => t.toLowerCase());
 };
 
@@ -19,7 +19,7 @@ const getDataSetWithTags = (tags) => {
   if (tags.length <= 0) return data.goodActions;
 
   // Make sure tags is an array and all lower case
-  let tagsArr = convertTagsToArr(tags);
+  const tagsArr = convertTagsToArr(tags);
 
   const newData = [];
 
@@ -59,7 +59,7 @@ const getSingleRandomGoodAction = (isXML = false, tags = []) => {
   // Check for XML or JSON version
   if (isXML) {
     return `<?xml version="1.0"?>\n${goodActionAsXML(
-      applicableData[randIndex]
+      applicableData[randIndex],
     )}`;
   }
   return JSON.stringify(applicableData[randIndex]);
@@ -69,7 +69,7 @@ const getSingleRandomGoodAction = (isXML = false, tags = []) => {
 const getMultipleRandomGoodActions = (
   isXML = false,
   enteredLimit = null,
-  tags = []
+  tags = [],
 ) => {
   // Only use goodActions that have the given tags
   const applicableData = getDataSetWithTags(tags);
@@ -121,7 +121,7 @@ const getSingleRandomGoodActionResponse = (
   response,
   params,
   acceptedTypes,
-  httpMethod
+  httpMethod,
 ) => {
   const isXML = acceptedTypes.includes('text/xml');
   const contentType = isXML ? 'text/xml' : 'application/json';
@@ -141,14 +141,14 @@ const getMultipleRandomGoodActionsResponse = (
   response,
   params,
   acceptedTypes,
-  httpMethod
+  httpMethod,
 ) => {
   const isXML = acceptedTypes.includes('text/xml');
   const contentType = isXML ? 'text/xml' : 'application/json';
   const content = getMultipleRandomGoodActions(
     isXML,
     params.limit,
-    params.tags
+    params.tags,
   );
 
   const headers = { 'Content-Type': contentType };
@@ -166,10 +166,10 @@ const addSuggestionResponse = (request, response, params) => {
     message: "A 'Good Action' is required",
   };
 
-  if (params.goodAction != null) {
+  if (params.action != null) {
     const newData = {
       id: uuidv4(),
-      action: params.goodAction,
+      action: params.action,
       tags: ['unapproved', ...convertTagsToArr(params.tags)],
     };
     data.goodActions.push(newData);
@@ -183,11 +183,25 @@ const addSuggestionResponse = (request, response, params) => {
   response.end();
 };
 
-// Removes the goodAction with the given id
+// Removes the goodAction with the given params.id
 const deleteGoodActionResponse = (request, response, params) => {
   for (let i = 0; i < data.goodActions.length; i++) {
     if (data.goodActions[i].id === params.id) {
       data.goodActions.splice(i, 1);
+      break;
+    }
+  }
+
+  response.writeHead(204, {});
+  response.end();
+};
+
+// Updates the goodAction with the given params.id
+const updateGoodActionResponse = (request, response, params) => {
+  for (let i = 0; i < data.goodActions.length; i++) {
+    if (data.goodActions[i].id === params.id) {
+      data.goodActions[i].action = params.action;
+      data.goodActions[i].tags = convertTagsToArr(params.tags);
       break;
     }
   }
@@ -201,4 +215,5 @@ module.exports = {
   getMultipleRandomGoodActionsResponse,
   addSuggestionResponse,
   deleteGoodActionResponse,
+  updateGoodActionResponse,
 };
