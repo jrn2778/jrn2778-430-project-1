@@ -5,18 +5,49 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Better World</title>
-    <link rel="stylesheet" href="default-styles.css">
+    <link rel="stylesheet" href="default-styles.css" />
     <script src="src/index.js" type="module"></script>
   </head>
 
   <body>
     <nav>
       <a href="/">Home</a>&nbsp;&bull;&nbsp;
-      <a href="/app">App</a>&nbsp;&bull;&nbsp; 
+      <a href="/app">App</a>&nbsp;&bull;&nbsp;
       <a href="/suggest">Suggest</a>&nbsp;&bull;&nbsp;
       <a href="/admin">Admin</a>
     </nav>
-      <h1>Better World</h1>
-      <p id="goodAction">YOU can make the world a better place.</p>
+    <h1>Better World</h1>
+    <p id="goodAction">YOU can make the world a better place.</p>
+    <h2>Users</h2>
+    <p>
+      Get some ideas on good actions you can do to make the world a better
+      place!
+    </p>
+    <p>Visit the <a href="/app">app.</a></p>
+    <p>
+      Or perhaps suggest your own good action: <a href="/suggest">suggest.</a>
+    </p>
+    <h2>Developers</h2>
+    <p>Access the API with the following endpoints:</p>
+    <ul>
+      <li>
+        <a href="/good-action">/good-action</a>
+        (Get a single, random good action)
+      </li>
+      <li>
+        <a href="/good-actions">/good-actions</a>
+        (Get all the good actions)
+      </li>
+      <li>
+        <a href="/good-actions?limit=3">/good-actions?limit=3</a>
+        (Get a certain amount of random good actions)
+      </li>
+      <li>
+        <a href="/good-actions?tags=environment&tags=animals">
+          /good-actions?tags=environment&tags=animals
+        </a>
+        (Get any good action that has at least one of the given tags)
+      </li>
+    </ul>
   </body>
 </html>
