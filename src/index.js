@@ -9,12 +9,14 @@ const port = process.env.PORT || process.env.NODE_PORT || 3000;
 const urlStruct = {
   // Pages
   '/': htmlHandler.getIndexResponse,
+  '/app': htmlHandler.getAppResponse,
   '/suggest': htmlHandler.getSuggestResponse,
   '/admin': htmlHandler.getAdminResponse,
   // CSS
   '/default-styles.css': htmlHandler.getDefaultStylesResponse,
   // JS
   '/src/index.js': htmlHandler.getIndexJSReponse,
+  '/src/app.js': htmlHandler.getAppJSReponse,
   '/src/suggest.js': htmlHandler.getSuggestJSReponse,
   '/src/admin.js': htmlHandler.getAdminJSReponse,
   '/src/util.js': htmlHandler.getUtilJSReponse,

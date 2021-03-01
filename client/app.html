@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Better World: App</title>
+    <link rel="stylesheet" href="default-styles.css" />
+    <script src="src/app.js" type="module"></script>
+  </head>
+
+  <body>
+    <nav>
+      <a href="/">Home</a>&nbsp;&bull;&nbsp;
+      <a href="/app">App</a>&nbsp;&bull;&nbsp;
+      <a href="/suggest">Suggest</a>&nbsp;&bull;&nbsp;
+      <a href="/admin">Admin</a>
+    </nav>
+    <h1>Find Some Good Things You Can Do Today!</h1>
+    <form id="searchForm">
+      <h2>Max Number of Results?</h2>
+      <input type="number" name="limit" id="searchLimit" min="1" max="10" />
+      <br />
+      <h2>Any Specific Tags?</h2>
+      <label for="individual">Individual</label>
+      <input type="checkbox" name="individual" /> |
+      <label for="environment">Environment</label>
+      <input type="checkbox" name="environment" /> |
+      <label for="bring-friends">Bring Friends</label>
+      <input type="checkbox" name="bring-friends" /> |
+      <label for="people">People</label>
+      <input type="checkbox" name="people" /> |
+      <label for="animals">Animals</label>
+      <input type="checkbox" name="animals" />
+      <br />
+      <button type="submit">Search</button>
+    </form>
+    <div id="searchResults"></div>
+  </body>
+</html>
