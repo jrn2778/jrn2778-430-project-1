@@ -12,21 +12,19 @@ function getGoodAction(callback) {
 }
 
 // Calls DELETE request to delete goodAction with given id
-// htmlElement is the goodAction HTML element that also needs to be deleted (passed through to callback)
-function deleteGoodAction(id, callback, htmlElement) {
+function deleteGoodAction(id, callback, goodAction) {
   const xhr = new XMLHttpRequest();
   xhr.open('DELETE', `/delete?id=${id}`);
-  xhr.onload = (e) => callback(e, htmlElement);
+  xhr.onload = (e) => callback(e, goodAction);
   xhr.send();
 }
 
 // Updates a goodAction with the given formData
 // The goodAction to update is from formData.id
-// htmlElement is the goodAction HTML element that also needs to be updated (passed through to callback)
-function updateGoodAction(formData, callback, htmlElement) {
+function updateGoodAction(formData, callback, goodAction) {
   const xhr = new XMLHttpRequest();
   xhr.open('PUT', '/update');
-  xhr.onload = (e) => callback(e, htmlElement);
+  xhr.onload = (e) => callback(e, goodAction);
   xhr.send(formData);
 }
 

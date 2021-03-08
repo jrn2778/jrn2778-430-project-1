@@ -5,21 +5,52 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Better World: Admin</title>
+
+    <!-- Bulma & Custom Styles -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"
+    />
     <link rel="stylesheet" href="default-styles.css" />
+
+    <!-- Vue & Custom JS -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="src/admin.js" type="module"></script>
   </head>
 
-  <body>
-    <nav>
-      <a href="/">Home</a>&nbsp;&bull;&nbsp;
-      <a href="/app">App</a>&nbsp;&bull;&nbsp;
-      <a href="/suggest">Suggest</a>&nbsp;&bull;&nbsp;
-      <a href="/admin">Admin</a>
-    </nav>
-    <h1>Admin</h1>
-    <h2>Unapproved</h2>
-    <div id="unapproved" class="grid"></div>
-    <h2>Approved</h2>
-    <div id="approved" class="grid"></div>
+  <body class="has-navbar-fixed-top">
+    <div id="admin">
+      <custom-nav></custom-nav>
+      <div class="hero has-text-centered">
+        <div class="hero-head mt-5">
+          <h1 class="title">Admin</h1>
+        </div>
+        <div class="hero-body">
+          <div class="box" v-if="unapproved.length > 0">
+            <h2 class="subtitle has-text-weight-bold">Unapproved</h2>
+            <div class="columns is-multiline is-centered">
+              <good-action-card
+                v-for="(action, i) in unapproved"
+                :key="i"
+                :goodaction="action"
+                :approveclicked="approveClicked"
+                :removeclicked="removeClicked"
+              ></good-action-card>
+            </div>
+          </div>
+          <div class="box">
+            <h2 class="subtitle has-text-weight-bold">Approved</h2>
+            <div class="columns is-multiline is-centered">
+              <good-action-card
+                v-for="(action, i) in approved"
+                :key="i"
+                :goodaction="action"
+                :removeclicked="removeClicked"
+              ></good-action-card>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

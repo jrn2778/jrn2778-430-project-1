@@ -1,7 +1,7 @@
 // Navbar component
 const customNav = Vue.component('custom-nav', {
   template: `
-    <nav class="navbar">
+    <nav class="navbar is-fixed-top">
       <div class="navbar-brand">
         <a class="navbar-item" href="/">Better World</a>
   
@@ -44,19 +44,36 @@ const customNav = Vue.component('custom-nav', {
   },
 });
 
+// Displays a good action as a card
 const goodActionCard = Vue.component('good-action-card', {
-  props: ['goodaction'],
+  props: ['goodaction', 'approveclicked', 'removeclicked'],
   template: `
   <div class="column is-one-quarter-desktop is-half-tablet">
-    <div class="card">
+    <div class="card is-flex is-flex-direction-column is-justify-content-space-between">
       <div class="card-content has-text-centered">
-        <p class="pb-3">{{ goodaction.action }}</p>
+        <p class="pb-3 has-text-weight-medium">{{ goodaction.action }}</p>
         <div class="is-flex is-justify-content-center is-flex-wrap-wrap">
           <span v-for="(tag, i) in goodaction.tags" :key="i" class="pl-1 pr-1">
             #{{ tag }}
           </span>
         </div>
       </div>
+      <footer class="card-footer">
+        <button 
+          class="button is-success is-outlined card-footer-item"
+          v-if="approveclicked"
+          @click="approveclicked(goodaction)"
+        >
+          Approve
+        </button>
+        <button 
+          class="button is-danger is-outlined card-footer-item"
+          v-if="removeclicked"
+          @click="removeclicked(goodaction)"
+        >
+          Remove
+        </button>
+      </footer>
     </div>
   </div>`,
 });
