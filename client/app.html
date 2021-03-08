@@ -5,36 +5,101 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Better World: App</title>
+
+    <!-- Bulma & Custom Styles -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"
+    />
     <link rel="stylesheet" href="default-styles.css" />
+
+    <!-- Vue & Custom JS -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="src/app.js" type="module"></script>
   </head>
 
   <body>
-    <nav>
-      <a href="/">Home</a>&nbsp;&bull;&nbsp;
-      <a href="/app">App</a>&nbsp;&bull;&nbsp;
-      <a href="/suggest">Suggest</a>&nbsp;&bull;&nbsp;
-      <a href="/admin">Admin</a>
-    </nav>
-    <h1>Find Some Good Things You Can Do Today!</h1>
-    <form id="searchForm">
-      <h2>Max Number of Results?</h2>
-      <input type="number" name="limit" id="searchLimit" min="1" max="10" />
-      <br />
-      <h2>Any Specific Tags?</h2>
-      <label for="individual">Individual</label>
-      <input type="checkbox" name="individual" /> |
-      <label for="environment">Environment</label>
-      <input type="checkbox" name="environment" /> |
-      <label for="bring-friends">Bring Friends</label>
-      <input type="checkbox" name="bring-friends" /> |
-      <label for="people">People</label>
-      <input type="checkbox" name="people" /> |
-      <label for="animals">Animals</label>
-      <input type="checkbox" name="animals" />
-      <br />
-      <button type="submit">Search</button>
-    </form>
-    <div id="searchResults"></div>
+    <div id="app">
+      <custom-nav></custom-nav>
+      <section class="hero">
+        <div class="hero-body">
+          <div class="container has-text-centered">
+            <h1 class="title">Find Some Good Things You Can Do Today!</h1>
+            <form id="searchForm" @submit.prevent="search">
+              <div class="columns">
+                <div class="column">
+                  <div class="field">
+                    <label for="limit" class="label">
+                      Max Number of Results?
+                    </label>
+                    <div class="control">
+                      <input
+                        type="number"
+                        name="limit"
+                        id="searchLimit"
+                        min="1"
+                        max="10"
+                        class="input"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="column">
+                  <div class="field">
+                    <label class="label">Any Specific Tags?</label>
+                    <div
+                      class="is-flex is-justify-content-center is-flex-wrap-wrap"
+                    >
+                      <div class="control pl-2 pr-2">
+                        <label class="checkbox">
+                          <input type="checkbox" name="individual" />
+                          Individual
+                        </label>
+                      </div>
+                      <div class="control pl-2 pr-2">
+                        <label class="checkbox">
+                          <input type="checkbox" name="environment" />
+                          Environment
+                        </label>
+                      </div>
+                      <div class="control pl-2 pr-2">
+                        <label class="checkbox">
+                          <input type="checkbox" name="bring-friends" />
+                          Bring Friends
+                        </label>
+                      </div>
+                      <div class="control pl-2 pr-2">
+                        <label class="checkbox">
+                          <input type="checkbox" name="people" />
+                          People
+                        </label>
+                      </div>
+                      <div class="control pl-2 pr-2">
+                        <label class="checkbox">
+                          <input type="checkbox" name="animals" />
+                          Animals
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="button is-primary is-outlined">
+                Search
+              </button>
+            </form>
+            <div class="container pt-5">
+              <div class="columns is-multiline is-centered">
+                <good-action-card
+                  v-for="(action, i) in searchResults"
+                  :key="i"
+                  :goodaction="action"
+                ></good-action-card>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   </body>
 </html>

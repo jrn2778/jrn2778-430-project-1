@@ -44,4 +44,21 @@ const customNav = Vue.component('custom-nav', {
   },
 });
 
-export { customNav };
+const goodActionCard = Vue.component('good-action-card', {
+  props: ['goodaction'],
+  template: `
+  <div class="column is-one-quarter-desktop is-half-tablet">
+    <div class="card">
+      <div class="card-content has-text-centered">
+        <p class="pb-3">{{ goodaction.action }}</p>
+        <div class="is-flex is-justify-content-center is-flex-wrap-wrap">
+          <span v-for="(tag, i) in goodaction.tags" :key="i" class="pl-1 pr-1">
+            #{{ tag }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>`,
+});
+
+export { customNav, goodActionCard };
