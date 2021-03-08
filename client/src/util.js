@@ -4,7 +4,7 @@ function getGoodAction(callback) {
   const xhr = new XMLHttpRequest();
   xhr.open('GET', '/good-action');
   xhr.onload = (e) => {
-    if (e.target.status >= 200 && e.target.status < 300) {
+    if (e.target.status == 200) {
       callback(JSON.parse(e.target.response));
     } else callback(null);
   };

@@ -54,6 +54,9 @@ const getSingleRandomGoodAction = (isXML = false, tags = []) => {
   // Only use goodActions that have the given tags
   const applicableData = getDataSetWithTags(tags);
 
+  // Return null if there is no data
+  if (applicableData.length <= 0) return null;
+
   const randIndex = Math.floor(Math.random() * applicableData.length);
 
   // Check for XML or JSON version
@@ -74,6 +77,9 @@ const getMultipleRandomGoodActions = (
   // Only use goodActions that have the given tags
   const applicableData = getDataSetWithTags(tags);
   const chosenGoodActions = [];
+
+  // Return null if there is no data
+  if (applicableData.length <= 0) return null;
 
   // Don't shuffle if no limit was entered
   if (enteredLimit != null) {
@@ -126,12 +132,13 @@ const getSingleRandomGoodActionResponse = (
   const isXML = acceptedTypes.includes('text/xml');
   const contentType = isXML ? 'text/xml' : 'application/json';
   const content = getSingleRandomGoodAction(isXML, params.tags);
+  const status = content == null ? 204 : 200;
 
   const headers = { 'Content-Type': contentType };
   if (httpMethod === 'HEAD') headers['Content-Length'] = getBinarySize(content);
 
-  response.writeHead(200, headers);
-  if (httpMethod !== 'HEAD') response.write(content);
+  response.writeHead(status, headers);
+  if (httpMethod !== 'HEAD' && status !== 204) response.write(content);
   response.end();
 };
 
@@ -150,12 +157,13 @@ const getMultipleRandomGoodActionsResponse = (
     params.limit,
     params.tags,
   );
+  const status = content == null ? 204 : 200;
 
   const headers = { 'Content-Type': contentType };
   if (httpMethod === 'HEAD') headers['Content-Length'] = getBinarySize(content);
 
-  response.writeHead(200, headers);
-  if (httpMethod !== 'HEAD') response.write(content);
+  response.writeHead(status, headers);
+  if (httpMethod !== 'HEAD' && status !== 204) response.write(content);
   response.end();
 };
 
