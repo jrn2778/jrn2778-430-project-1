@@ -11,6 +11,7 @@ const appJS = fs.readFileSync(`${__dirname}/../client/src/app.js`);
 const suggestJS = fs.readFileSync(`${__dirname}/../client/src/suggest.js`);
 const adminJS = fs.readFileSync(`${__dirname}/../client/src/admin.js`);
 const utilJS = fs.readFileSync(`${__dirname}/../client/src/util.js`);
+const vueComponentsJS = fs.readFileSync(`${__dirname}/../client/src/vueComponents.js`);
 
 const getIndexResponse = (request, response) => {
   response.writeHead(200, { 'Content-Type': 'text/html' });
@@ -78,6 +79,12 @@ const getUtilJSReponse = (request, response) => {
   response.end();
 };
 
+const getVueComponentsJSReponse = (request, response) => {
+  response.writeHead(200, { 'Content-Type': 'text/javascript' });
+  response.write(vueComponentsJS);
+  response.end();
+};
+
 module.exports = {
   getIndexResponse,
   getAppResponse,
@@ -90,4 +97,5 @@ module.exports = {
   getSuggestJSReponse,
   getAdminJSReponse,
   getUtilJSReponse,
+  getVueComponentsJSReponse,
 };

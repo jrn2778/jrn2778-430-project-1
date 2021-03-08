@@ -20,6 +20,7 @@ const urlStruct = {
   '/src/suggest.js': htmlHandler.getSuggestJSReponse,
   '/src/admin.js': htmlHandler.getAdminJSReponse,
   '/src/util.js': htmlHandler.getUtilJSReponse,
+  '/src/vueComponents.js': htmlHandler.getVueComponentsJSReponse,
   // API Endpoints
   '/good-action': apiHandler.getSingleRandomGoodActionResponse,
   '/good-actions': apiHandler.getMultipleRandomGoodActionsResponse,
