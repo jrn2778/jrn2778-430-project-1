@@ -5,36 +5,85 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Better World: Make a Suggestion</title>
+
+    <!-- Bulma & Custom Styles -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"
+    />
     <link rel="stylesheet" href="default-styles.css" />
+
+    <!-- Vue & Custom JS -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="src/suggest.js" type="module"></script>
   </head>
 
   <body>
-    <nav>
-      <a href="/">Home</a>&nbsp;&bull;&nbsp;
-      <a href="/app">App</a>&nbsp;&bull;&nbsp;
-      <a href="/suggest">Suggest</a>&nbsp;&bull;&nbsp;
-      <a href="/admin">Admin</a>
-    </nav>
-    <h1>Suggestion</h1>
-    <form action="/add" method="post" id="suggestionForm">
-      <h2>Action</h2>
-      <input type="text" name="goodAction" id="goodAction" />
-      <br />
-      <h2>Tags</h2>
-      <label for="individual">Individual</label>
-      <input type="checkbox" name="individual" id="individualCheck" /> |
-      <label for="environment">Environment</label>
-      <input type="checkbox" name="environment" id="environmentCheck" /> |
-      <label for="bring-friends">Bring Friends</label>
-      <input type="checkbox" name="bring-friends" id="bringFriendsCheck" /> |
-      <label for="people">People</label>
-      <input type="checkbox" name="people" id="peopleCheck" /> |
-      <label for="animals">Animals</label>
-      <input type="checkbox" name="animals" id="animalsCheck" />
-      <br />
-      <button type="submit">Submit</button>
-    </form>
-    <p id="status"></p>
+    <div id="suggest">
+      <custom-nav></custom-nav>
+      <section class="hero is-fullheight-with-navbar">
+        <div class="hero-body">
+          <div class="container has-text-centered">
+            <h1 class="title">Make a Suggestion</h1>
+            <form action="/add" method="post" @submit.prevent="sendSuggestionForm">
+              <div class="columns">
+                <div class="column">
+                  <div class="field">
+                    <label for="limit" class="label">
+                      A Good Action That Can Better the World
+                    </label>
+                    <div class="control">
+                      <input type="text" name="goodAction" id="goodAction" class="input" />
+                    </div>
+                  </div>
+                </div>
+                <div class="column">
+                  <div class="field">
+                    <label class="label">Related Tags</label>
+                    <div
+                      class="is-flex is-justify-content-center is-flex-wrap-wrap"
+                    >
+                      <div class="control pl-2 pr-2">
+                        <label class="checkbox">
+                          <input type="checkbox" name="individual" />
+                          Individual
+                        </label>
+                      </div>
+                      <div class="control pl-2 pr-2">
+                        <label class="checkbox">
+                          <input type="checkbox" name="environment" />
+                          Environment
+                        </label>
+                      </div>
+                      <div class="control pl-2 pr-2">
+                        <label class="checkbox">
+                          <input type="checkbox" name="bring-friends" />
+                          Bring Friends
+                        </label>
+                      </div>
+                      <div class="control pl-2 pr-2">
+                        <label class="checkbox">
+                          <input type="checkbox" name="people" />
+                          People
+                        </label>
+                      </div>
+                      <div class="control pl-2 pr-2">
+                        <label class="checkbox">
+                          <input type="checkbox" name="animals" />
+                          Animals
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="button is-primary is-outlined">
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
   </body>
 </html>
