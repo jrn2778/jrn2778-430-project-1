@@ -21,6 +21,8 @@ const urlStruct = {
   '/src/admin.js': htmlHandler.getAdminJSReponse,
   '/src/util.js': htmlHandler.getUtilJSReponse,
   '/src/vueComponents.js': htmlHandler.getVueComponentsJSReponse,
+  // Media
+  '/media/logo.png': htmlHandler.getLogoImgReponse,
   // API Endpoints
   '/good-action': apiHandler.getSingleRandomGoodActionResponse,
   '/good-actions': apiHandler.getMultipleRandomGoodActionsResponse,

@@ -12,6 +12,7 @@ const suggestJS = fs.readFileSync(`${__dirname}/../client/src/suggest.js`);
 const adminJS = fs.readFileSync(`${__dirname}/../client/src/admin.js`);
 const utilJS = fs.readFileSync(`${__dirname}/../client/src/util.js`);
 const vueComponentsJS = fs.readFileSync(`${__dirname}/../client/src/vueComponents.js`);
+const logoImg = fs.readFileSync(`${__dirname}/../client/media/logo.png`);
 
 const getIndexResponse = (request, response) => {
   response.writeHead(200, { 'Content-Type': 'text/html' });
@@ -85,6 +86,12 @@ const getVueComponentsJSReponse = (request, response) => {
   response.end();
 };
 
+const getLogoImgReponse = (request, response) => {
+  response.writeHead(200, { 'Content-Type': 'image/png' });
+  response.write(logoImg);
+  response.end();
+};
+
 module.exports = {
   getIndexResponse,
   getAppResponse,
@@ -98,4 +105,5 @@ module.exports = {
   getAdminJSReponse,
   getUtilJSReponse,
   getVueComponentsJSReponse,
+  getLogoImgReponse,
 };
