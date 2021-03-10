@@ -1,27 +1,5 @@
 import { customNav } from './vueComponents.js';
 
-// Response after form action has completed
-function handleFormResponse(e) {
-  const xhr = e.target;
-
-  switch (xhr.status) {
-    case 200:
-      alert('Success!');
-      break;
-    case 201:
-      alert('Created!');
-      break;
-    case 204:
-      alert('Updated (No Content)!');
-      break;
-    case 400:
-      alert('Bad Request!');
-      break;
-    default:
-      alert('Error code not implemented by client');
-  }
-}
-
 // Initialize the Vue instance
 const suggest = new Vue({
   el: '#suggest',
@@ -29,7 +7,9 @@ const suggest = new Vue({
     customNav,
   },
   data: function () {
-    return {};
+    return {
+      responseMsg: '',
+    };
   },
   methods: {
     // Submit action for the suggestion form
@@ -53,10 +33,31 @@ const suggest = new Vue({
       const xhr = new XMLHttpRequest();
       xhr.open(formMethod, formAction);
       xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      xhr.onload = handleFormResponse;
+      xhr.onload = this.handleFormResponse;
       xhr.send(formData);
 
       return false;
+    },
+    // Response after form action has completed
+    handleFormResponse: function (e) {
+      const xhr = e.target;
+
+      switch (xhr.status) {
+        case 200:
+          this.responseMsg = 'Success!';
+          break;
+        case 201:
+          this.responseMsg = 'Suggestion Created!';
+          break;
+        case 204:
+          this.responseMsg = 'Suggestion Updated!';
+          break;
+        case 400:
+          this.responseMsg = 'ERROR: Bad Request.';
+          break;
+        default:
+          this.responseMsg = 'An unknown error has occurred.';
+      }
     },
   },
 });

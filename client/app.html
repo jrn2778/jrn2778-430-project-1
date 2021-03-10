@@ -23,7 +23,7 @@
       <custom-nav></custom-nav>
       <section class="hero">
         <div class="hero-body">
-          <div class="container has-text-centered">
+          <div class="container has-text-centered box">
             <h1 class="title">Find Some Good Things You Can Do Today!</h1>
             <form id="searchForm" @submit.prevent="search">
               <div class="columns">
@@ -84,18 +84,18 @@
                   </div>
                 </div>
               </div>
-              <button type="submit" class="button is-primary is-outlined">
+              <button type="submit" class="button is-success is-outlined">
                 Search
               </button>
             </form>
-            <div class="container pt-5">
-              <div class="columns is-multiline is-centered">
-                <good-action-card
-                  v-for="(action, i) in searchResults"
-                  :key="i"
-                  :goodaction="action"
-                ></good-action-card>
-              </div>
+          </div>
+          <div class="container pt-5">
+            <div class="columns is-multiline is-centered">
+              <good-action-card
+                v-for="(action, i) in searchResults"
+                :key="i"
+                :goodaction="action"
+              ></good-action-card>
             </div>
           </div>
         </div>

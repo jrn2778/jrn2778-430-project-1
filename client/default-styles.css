@@ -3,3 +3,17 @@
 .card {
   height: 100% !important;
 }
+
+.fadeSlideTop-enter {
+  opacity: 0;
+  top: 50px;
+}
+
+.fadeSlideTop-enter-to {
+  opacity: 1;
+  top: 0;
+}
+
+.fadeSlideTop-enter-active {
+  transition: all 0.5s;
+}

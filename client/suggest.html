@@ -21,11 +21,27 @@
   <body class="has-navbar-fixed-top">
     <div id="suggest">
       <custom-nav></custom-nav>
-      <section class="hero is-fullheight-with-navbar">
+      <section class="hero">
         <div class="hero-body">
-          <div class="container has-text-centered">
+          <transition name="fadeSlideTop">
+            <div class="container box p-0" v-if="responseMsg">
+              <article class="message is-warning">
+                <div
+                  class="message-body is-flex is-justify-content-space-between"
+                >
+                  <p>{{ responseMsg }}</p>
+                  <button class="delete" @click="responseMsg=''"></button>
+                </div>
+              </article>
+            </div>
+          </transition>
+          <div class="container has-text-centered box">
             <h1 class="title">Make a Suggestion</h1>
-            <form action="/add" method="post" @submit.prevent="sendSuggestionForm">
+            <form
+              action="/add"
+              method="post"
+              @submit.prevent="sendSuggestionForm"
+            >
               <div class="columns">
                 <div class="column">
                   <div class="field">
@@ -33,7 +49,12 @@
                       A Good Action That Can Better the World
                     </label>
                     <div class="control">
-                      <input type="text" name="goodAction" id="goodAction" class="input" />
+                      <input
+                        type="text"
+                        name="goodAction"
+                        id="goodAction"
+                        class="input"
+                      />
                     </div>
                   </div>
                 </div>
@@ -77,7 +98,7 @@
                   </div>
                 </div>
               </div>
-              <button type="submit" class="button is-primary is-outlined">
+              <button type="submit" class="button is-success is-outlined">
                 Submit
               </button>
             </form>
