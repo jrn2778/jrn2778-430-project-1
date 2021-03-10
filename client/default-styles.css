@@ -17,3 +17,14 @@
 .fadeSlideTop-enter-active {
   transition: all 0.5s;
 }
+
+/* Source: https://css-tricks.com/snippets/css/typewriter-effect/ */
+.has-cursor {
+  border-right: .1em solid #7bc62d;
+  animation: cursor-blink .7s step-end infinite;
+}
+
+@keyframes cursor-blink {
+  from, to { border-color: transparent }
+  50% { border-color: #7bc62d }
+}
