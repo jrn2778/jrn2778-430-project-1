@@ -174,7 +174,7 @@ const addSuggestionResponse = (request, response, params) => {
     message: "A 'Good Action' is required",
   };
 
-  if (params.action != null && params.action.trim() != '') {
+  if (params.action != null && params.action.trim() !== '') {
     const newData = {
       id: uuidv4(),
       action: params.action,
