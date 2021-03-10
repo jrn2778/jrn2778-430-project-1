@@ -9,6 +9,7 @@ const suggest = new Vue({
   data: function () {
     return {
       responseMsg: '',
+      msgColorClass: 'is-warning',
     };
   },
   methods: {
@@ -45,18 +46,21 @@ const suggest = new Vue({
       switch (xhr.status) {
         case 200:
           this.responseMsg = 'Success!';
+          this.msgColorClass = 'is-success';
           break;
         case 201:
           this.responseMsg = 'Suggestion Created!';
-          break;
-        case 204:
-          this.responseMsg = 'Suggestion Updated!';
+          this.msgColorClass = 'is-success';
           break;
         case 400:
-          this.responseMsg = 'ERROR: Bad Request.';
+          this.responseMsg =
+            'Suggestion not submitted. Please make sure to enter an action.';
+          this.msgColorClass = 'is-warning';
           break;
         default:
           this.responseMsg = 'An unknown error has occurred.';
+          this.msgColorClass = 'is-danger';
+          break;
       }
     },
   },
